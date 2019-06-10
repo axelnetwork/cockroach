@@ -35,8 +35,8 @@ import (
 	"github.com/cockroachdb/cockroach/pkg/util/ipaddr"
 	"github.com/cockroachdb/cockroach/pkg/util/log"
 	"github.com/cockroachdb/cockroach/pkg/util/timeofday"
+	"github.com/cockroachdb/errors"
 	"github.com/lib/pq/oid"
-	"github.com/pkg/errors"
 )
 
 // pgType contains type metadata used in RowDescription messages.
@@ -488,7 +488,7 @@ func (b *writeBuffer) writeBinaryDatum(
 		b.putInt32(4)
 		b.putInt32(int32(v.DInt))
 	default:
-		b.setError(pgerror.AssertionFailedf("unsupported type %T", d))
+		b.setError(errors.AssertionFailedf("unsupported type %T", d))
 	}
 }
 
